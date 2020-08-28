@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import LoginForm from './components/Login'
+import BlogForm from './components/Blogs'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -35,47 +36,25 @@ const App = () => {
     }
   }
 
-  if (!user) {
-    return (
-    <div>
-      <h2>Log in to application</h2>
-
-      <Notification message={errorMessage}/>
-
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-            />
-        </div>
-        <div>
-          password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-            />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </div>
-    )
-  }
-  
   return (
     <div>
-      <div>
-        {user.name} is logged in
-      </div>
-      <h2>blogs</h2>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
+      <br></br>
+      <Notification message={errorMessage}/>
+
+      {user === null ?
+        <LoginForm
+          username={username}
+          password={password}
+          setUsername={setUsername}
+          setPassword={setPassword}
+          handleLogin={(event) => handleLogin(event)}
+        /> :
+        <BlogForm 
+          user={user.name}
+          blogs={blogs}
+        />
+      }
+
     </div>
   )
 }
