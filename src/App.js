@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/Login'
 import Blogs from './components/Blogs'
+import BlogForm from './components/Blogform'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -11,9 +13,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -76,21 +75,11 @@ const App = () => {
     setUser(null)
   }
 
-  const addNew = async (event) => {
-    event.preventDefault()
-
+  const addNew = async (newBlog) => {
     try {
-      const newBlog = {
-        title: title,
-        author: author,
-        url: url,
-      }
-
+      blogFormRef.current.toggleVisibility()
       const response = await blogService.create(newBlog)
       setBlogs(blogs.concat(response))
-      setTitle('')
-      setAuthor('')
-      setUrl('')
 
       setMessage({
         text: `A new blog ${response.title} by ${response.author} was added`,
@@ -111,6 +100,14 @@ const App = () => {
     }
   }
 
+  const blogFormRef = useRef()
+
+  const blogForm = () => (
+    <Togglable buttonLabel='add new blog' ref={blogFormRef}>
+      <BlogForm createBlog={addNew}/>
+    </Togglable>
+  )
+
   return (
     <div>
       <br></br>
@@ -120,22 +117,19 @@ const App = () => {
         <LoginForm
           username={username}
           password={password}
-          setUsername={setUsername}
-          setPassword={setPassword}
-          handleLogin={(event) => handleLogin(event)}
+          handleUsernameChange={setUsername}
+          handlePasswordChange={setPassword}
+          handleSubmit={(event) => handleLogin(event)}
         /> :
-        <Blogs 
-          user={user.name}
-          handleLogout={(event) => handleLogout(event)}
-          blogs={blogs}
-          title={title}
-          author={author}
-          url={url}
-          setTitle={setTitle}
-          setAuthor={setAuthor}
-          setUrl={setUrl}
-          addNew={(event) => addNew(event)}
-        />
+        <div>
+          <Blogs 
+            user={user.name}
+            handleLogout={(event) => handleLogout(event)}
+            blogs={blogs}
+          />
+          <br></br>
+          {blogForm()}
+        </div>
       }
 
     </div>
