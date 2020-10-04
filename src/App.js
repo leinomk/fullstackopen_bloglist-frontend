@@ -65,6 +65,7 @@ const App = () => {
     event.preventDefault()
 
     window.localStorage.clear()
+    blogService.setToken(null)
     setMessage({
       text: `${user.name} logged out`,
       type: 'notification',
@@ -100,6 +101,14 @@ const App = () => {
     }
   }
 
+  const likeBlog = async (updatedBlog, id) => {
+    const response = await blogService.update(updatedBlog, id)
+    console.log(`updated blog `, response)
+    const blogs = await blogService.getAll()
+    console.log(`all blogs`, blogs)
+    setBlogs(blogs)
+  }
+
   const blogFormRef = useRef()
 
   const blogForm = () => (
@@ -126,6 +135,7 @@ const App = () => {
             user={user.name}
             handleLogout={(event) => handleLogout(event)}
             blogs={blogs}
+            updateBlog={likeBlog}
           />
           <br></br>
           {blogForm()}

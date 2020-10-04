@@ -5,6 +5,7 @@ const Blogs = ({
   user,
   blogs,
   handleLogout,
+  updateBlog
 }) => (
   <div>  
     <br></br>
@@ -15,8 +16,10 @@ const Blogs = ({
     </div>
 
     <h2>Blogs</h2>
-    {blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} />
+    {blogs
+      .sort((a, b) => a.likes - b.likes)
+      .map(blog =>
+        <Blog key={blog.id} blog={blog} handleLikeButton={updateBlog}/>
     )}
 
   </div>

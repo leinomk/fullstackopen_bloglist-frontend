@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, handleLikeButton }) => {
   const [showMore, setShowMore] = useState(false)
 
   const blogStyle = {
@@ -13,6 +13,19 @@ const Blog = ({ blog }) => {
 
   const toggleView = () => {
     setShowMore(!showMore)
+  }
+
+  const likeBlog = async () => {
+    const updatedLikes = blog.likes + 1
+    const updatedBlog = {
+      title: blog.title,
+      author: blog.author,
+      likes: updatedLikes,
+      user: blog.user._id,
+      url: blog.url,
+    }
+
+    handleLikeButton(updatedBlog, blog.id)
   }
 
   const fullView = (
@@ -29,7 +42,7 @@ const Blog = ({ blog }) => {
         </div>
         <div>
           likes {blog.likes}
-          <button>
+          <button onClick={likeBlog}>
             like
           </button>
         </div>
