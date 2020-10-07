@@ -17,7 +17,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const App = () => {
       const user = await loginService.login({
         username, password
       })
-      
+
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
       )
@@ -153,7 +153,7 @@ const App = () => {
           handleSubmit={(event) => handleLogin(event)}
         /> :
         <div>
-          <Blogs 
+          <Blogs
             user={user}
             handleLogout={(event) => handleLogout(event)}
             blogs={blogs}

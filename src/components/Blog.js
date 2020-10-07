@@ -61,7 +61,7 @@ const Blog = ({ blog, handleLikeButton, loggedInUser, removeBlog }) => {
             : null
           }
         </div>
-        
+
       </div>
     </div>
   )
