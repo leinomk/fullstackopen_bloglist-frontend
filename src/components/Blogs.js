@@ -5,13 +5,14 @@ const Blogs = ({
   user,
   blogs,
   handleLogout,
-  updateBlog
+  updateBlog,
+  removeBlog
 }) => (
   <div>  
     <br></br>
 
     <div>
-      {user} is logged in 
+      {user.name} is logged in 
       <button onClick={handleLogout}>log out</button>
     </div>
 
@@ -19,7 +20,8 @@ const Blogs = ({
     {blogs
       .sort((a, b) => a.likes - b.likes)
       .map(blog =>
-        <Blog key={blog.id} blog={blog} handleLikeButton={updateBlog}/>
+        <Blog key={blog.id} blog={blog} handleLikeButton={updateBlog}
+              loggedInUser={user} removeBlog={removeBlog}/>
     )}
 
   </div>

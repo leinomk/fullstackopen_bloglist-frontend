@@ -102,11 +102,33 @@ const App = () => {
   }
 
   const likeBlog = async (updatedBlog, id) => {
-    const response = await blogService.update(updatedBlog, id)
-    console.log(`updated blog `, response)
+    await blogService.update(updatedBlog, id)
     const blogs = await blogService.getAll()
-    console.log(`all blogs`, blogs)
     setBlogs(blogs)
+  }
+
+  const deleteBlog = async ( blog ) => {
+    try {
+      await blogService.remove(blog.id)
+      const blogs = await blogService.getAll()
+      setBlogs(blogs)
+
+      setMessage({
+        text: `A blog '${blog.title}' by ${blog.author} was deleted`,
+        type: 'notification'
+      })
+      setTimeout(() => {
+        setMessage({})
+      }, 5000)
+    } catch (exception) {
+      setMessage({
+        text: 'Error when deleting a blog',
+        type: 'error'
+      })
+      setTimeout(() => {
+        setMessage({})
+      }, 5000)
+    }
   }
 
   const blogFormRef = useRef()
@@ -132,10 +154,11 @@ const App = () => {
         /> :
         <div>
           <Blogs 
-            user={user.name}
+            user={user}
             handleLogout={(event) => handleLogout(event)}
             blogs={blogs}
             updateBlog={likeBlog}
+            removeBlog={deleteBlog}
           />
           <br></br>
           {blogForm()}
