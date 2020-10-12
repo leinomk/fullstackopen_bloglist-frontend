@@ -13,7 +13,7 @@ const Blogs = ({
 
     <div>
       {user.name} is logged in
-      <button onClick={handleLogout}>log out</button>
+      <button id="logoutbutton" onClick={handleLogout}>log out</button>
     </div>
 
     <h2>Blogs</h2>
