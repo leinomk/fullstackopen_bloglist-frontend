@@ -7,9 +7,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.blogstyle {
+  color: black;
+  padding-top: 10px;
+  padding-left: 4px;
+  border-style: solid;
+  border-radius: 1px;
+  padding-bottom: 5px;
 }
 
 .notification {

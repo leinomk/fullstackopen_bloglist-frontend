@@ -33,7 +33,7 @@ test('initially renders simple content', () => {
   )
   expect(component.queryByText('www.testblog.com')).toBeNull()
 
-  expect(component.queryByText('Mauri Leino')).toBeNull()
+  expect(component.queryByText('likes')).toBeNull()
 })
 
 test('renders full content after clicking show more -button', () => {
@@ -69,10 +69,10 @@ test('renders full content after clicking show more -button', () => {
   )
   expect(component.queryByText('www.testblog.com')).toBeDefined()
 
-  expect(component.queryByText('Mauri Leino')).toBeDefined()
+  expect(component.queryByText('likes')).toBeDefined()
 })
 
-test('clicking the like-button calls event handler twice', async () => {
+test('clicking the like-button twice calls event handler twice', async () => {
   const blog = {
     title: 'Component testing is done with react-testing-library',
     author: 'Test Author',

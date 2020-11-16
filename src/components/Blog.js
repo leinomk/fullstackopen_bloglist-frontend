@@ -3,14 +3,6 @@ import React, { useState } from 'react'
 const Blog = ({ blog, handleLikeButton, loggedInUser, removeBlog }) => {
   const [showMore, setShowMore] = useState(false)
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
-
   const toggleView = () => {
     setShowMore(!showMore)
   }
@@ -35,35 +27,32 @@ const Blog = ({ blog, handleLikeButton, loggedInUser, removeBlog }) => {
   }
 
   const fullView = (
-    <div>
+    <span>
       <div>
-        <div>
-          {blog.title}, by {blog.author}
-          <button onClick={toggleView}>
-            hide
-          </button>
-        </div>
-        <div>
-          {blog.url}
-        </div>
-        <div>
-          likes {blog.likes}
-          <button onClick={likeBlog}>
-            like
-          </button>
-        </div>
-        <div>
-          {blog.user.name}
-        </div>
-        <div>
-          {loggedInUser.username === blog.user.username
-            ? <button onClick={deleteBlog}>remove</button>
-            : null
-          }
-        </div>
-
+        {blog.title}, by {blog.author}
+        <button onClick={toggleView}>
+          hide
+        </button>
       </div>
-    </div>
+      <div>
+        {blog.url}
+      </div>
+      <div>
+        likes {blog.likes}
+        <button id="likeButton" onClick={likeBlog}>
+          like
+        </button>
+      </div>
+      <div>
+        {blog.user.name}
+      </div>
+      <div>
+        {loggedInUser.username === blog.user.username
+          ? <button onClick={deleteBlog}>remove</button>
+          : null
+        }
+      </div>
+    </span>
   )
 
   const simpleView = (
@@ -76,7 +65,7 @@ const Blog = ({ blog, handleLikeButton, loggedInUser, removeBlog }) => {
   )
 
   return (
-    <div style={blogStyle}>
+    <div className="blogstyle">
       {showMore
         ? <div>{fullView}</div>
         : <div>{simpleView}</div>

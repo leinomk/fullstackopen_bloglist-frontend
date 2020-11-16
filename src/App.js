@@ -114,7 +114,7 @@ const App = () => {
       setBlogs(blogs)
 
       setMessage({
-        text: `A blog '${blog.title}' by ${blog.author} was deleted`,
+        text: `Blog '${blog.title}' by ${blog.author} was deleted`,
         type: 'notification'
       })
       setTimeout(() => {
